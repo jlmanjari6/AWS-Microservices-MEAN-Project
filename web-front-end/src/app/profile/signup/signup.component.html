@@ -1,0 +1,90 @@
+<form #signupForm="ngForm" (ngSubmit)="register(signupForm)">
+    <div class="container">
+        <div style="width: 70%;" class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"> User Registration </h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="givenName">Given Name</label>
+                    <input id="givenName" name="givenName" required #givenNameControl="ngModel" ngModel type="text"
+                        class="form-control">
+                    <div class="alert alert-danger" *ngIf="givenNameControl.touched && !givenNameControl.valid">Given
+                        name
+                        is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input id="lastName" name="lastName" required #lastNameControl="ngModel" ngModel type="text"
+                        class="form-control">
+                    <div class="alert alert-danger" *ngIf="lastNameControl.touched && !lastNameControl.valid">Last name
+                        is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" placeholder="Example: pat@example.com" name="email" required #emailControl="ngModel" [pattern]="emailPattern" ngModel
+                        type="email" class="form-control">
+                    <div class="alert alert-danger" *ngIf="emailControl.touched && !emailControl.value">Email
+                        is required</div>
+                    <div class="alert alert-danger" *ngIf="emailControl.value && emailControl.errors">Invalid email
+                        format
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <div class="form-control">
+                        <label class="radio-inline">
+                            <input name="gender" required #genderControl="ngModel" ngModel type="radio" value="male">
+                            Male
+                        </label>
+                        <label class="radio-inline">
+                            <input name="gender" ngModel type="radio" value="female"> Female
+                        </label>
+                        <label class="radio-inline">
+                            <input name="gender" ngModel type="radio" value="other"> Other
+                        </label>
+                    </div>
+                    <div class="alert alert-danger" *ngIf="genderControl.touched &&!genderControl.valid">Gender
+                        is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input id="phone" placeholder="Example: +19999999999" #phoneControl="ngModel" required [pattern]="phonePattern" name="phone" ngModel
+                        type="text" class="form-control">
+                    <div class="alert alert-danger" *ngIf="phoneControl.touched &&!phoneControl.value">Phone number
+                        is required</div>
+                    <div class="alert alert-danger" *ngIf="phoneControl.value && phoneControl.errors">Phone number is
+                        not
+                        valid</div>
+
+                </div>
+                <div class="form-group">
+                    <mat-form-field class="example-full-width">
+                        <input name="date" [min]="minDate" [max]="maxDate" [formControl]="date" ngModel matInput
+                            [matDatepicker]="picker1" placeholder="Date of Birth">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="form-group">
+                    <label for="password">Set Password</label>
+                    <input id="password" required #pwdControl="ngModel" type="password" name="password" ngModel
+                        class="form-control">
+                    <div class="alert alert-danger" *ngIf="pwdControl.touched &&!pwdControl.valid">Password
+                        is required</div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="submit" class="btn btn-primary" [disabled]="!signupForm.valid">Register</button>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="container">
+    <div *ngIf="error" style="width: 70%" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{ error }}
+    </div>
+</div>

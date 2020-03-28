@@ -1,0 +1,17 @@
+td {
+    height: 50px;
+}
+
+mat-card {
+    margin: 2%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: medium;
+}
+
+.container {
+    margin-bottom: 3%;
+}
+
+table {
+    border: "1";
+}

@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="container">
+        <h2> Ticket History</h2>
+    </div>
+    <div *ngFor="let ticket of tickets">
+        <mat-card style="width: 50%;">
+            <mat-card-title class="main"> Booked on {{ticket.bookingDate | date}} </mat-card-title>
+            <mat-card style="display: inline-block;width: 50%;">
+                <table style="margin:1%;width: 100%">
+                    <tbody>
+                        <tr>
+                            <th scope="row"> Ticket ID </th>
+                            <td>{{ ticket.ticketId }} </td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row"> Origin </th>
+                            <td>{{ ticket.origin }} </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> Destination </th>
+                            <td>{{ ticket.destination }} </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> Travel date </th>
+                            <td>{{ ticket.travelDate | date }} </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> From time </th>
+                            <td>{{ ticket.startTime }} </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> To time </th>
+                            <td>{{ ticket.endTime }} </td>
+                        </tr>                       
+                        <tr>
+                            <th scope="row"> No. of seats </th>
+                            <td>{{ ticket.noOfSeats }} </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> Bus no. </th>
+                            <td>{{ ticket.busNo }} </td>
+                        </tr>                       
+                    </tbody>
+                </table>
+            </mat-card>
+            <mat-card style="display: block;float:right;margin-right: 4%;">
+                <mat-card-title class="fare"> Total fare- CAD {{ticket.fare}} </mat-card-title>
+            </mat-card>
+        </mat-card>
+        <br />
+    </div>
+    <br />
+</div>

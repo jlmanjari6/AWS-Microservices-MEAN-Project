@@ -1,0 +1,16 @@
+.panel-primary {
+    font-family: Georgia, 'Times New Roman', Times, serif;    
+}
+
+.container {
+    margin-left: 29%;
+    margin-top: 7%;
+}
+
+.panel-heading {
+    background-color: darkblue;
+}
+
+#btnLogin {
+    background-color: darkblue;
+}

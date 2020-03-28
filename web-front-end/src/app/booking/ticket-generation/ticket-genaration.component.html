@@ -1,0 +1,57 @@
+<div class="container">
+    <div style="width: 70%" class="alert alert-success" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        Congratulations, your booking has been confirmed! Please review your booking details below or you may download
+        the ticket for future reference!
+    </div>
+</div>
+
+<div id="ticketDiv" #ticketDiv class="container" style="margin-top: 20px;">
+    <h1>Your ticket details </h1>
+    <table style="margin-top:20px;width: 20%" class="table">
+        <tbody>
+            <tr>
+                <th scope="row"> Ticket ID </th>
+                <td>{{ ticket.ticketId }} </td>
+
+            </tr>
+            <tr>
+                <th scope="row"> Origin </th>
+                <td>{{ ticket.origin }} </td>
+            </tr>
+            <tr>
+                <th scope="row"> Destination </th>
+                <td>{{ ticket.destination }} </td>
+            </tr>
+            <tr>
+                <th scope="row"> Travel date </th>
+                <td>{{ ticket.travelDate | date }} </td>
+            </tr>
+            <tr>
+                <th scope="row"> From time </th>
+                <td>{{ ticket.fromTime }} </td>
+            </tr>
+            <tr>
+                <th scope="row"> To time </th>
+                <td>{{ ticket.toTime }} </td>
+            </tr>
+            <tr>
+                <th scope="row"> Total fare </th>
+                <td> CAD {{ ticket.fare }} </td>
+            </tr>
+            <tr>
+                <th scope="row"> No. of seats </th>
+                <td>{{ ticket.noOfSeats }} </td>
+            </tr>
+            <tr>
+                <th scope="row"> Bus no. </th>
+                <td>{{ ticket.busNo }} </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="example-button-row">
+        <button mat-raised-button color="primary" #testButton (click)="downloadAsPDF()">Download as PDF
+        </button>
+    </div>
+</div>

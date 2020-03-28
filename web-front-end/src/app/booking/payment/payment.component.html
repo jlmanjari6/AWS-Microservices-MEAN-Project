@@ -1,0 +1,46 @@
+<div class="container">
+    <div style="width: 70%;" class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title"> Payment Gateway </h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Card No.</mat-label>
+                        <input name="cardNo" [formControl]="cardNo" ngModel matInput placeholder="Example: 1111-1111-1111-1111">
+                    </mat-form-field>
+                </form>
+            </div>
+            <div class="form-group">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Card Holder Name </mat-label>
+                        <input name="cardHolderName" [formControl]="cardHolderName" ngModel matInput>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div class="form-group">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>CVV </mat-label>
+                        <input name="cvv" [formControl]="cvv" ngModel matInput>
+                    </mat-form-field>
+                </form>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="example-button-row">
+                <button mat-raised-button color="primary" #testButton (click)="proceedToPayment()">Proceed to
+                    Payment</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div *ngIf="error" style="width: 70%" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{ error }}
+    </div>
+</div>

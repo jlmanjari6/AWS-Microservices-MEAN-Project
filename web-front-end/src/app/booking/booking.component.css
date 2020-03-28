@@ -1,0 +1,17 @@
+
+.example-container {
+    height: 300px;
+    overflow: auto;
+  }
+  
+  table {
+    width: 100%;
+  }
+
+  div.panel-heading {
+    background-color: darkblue;
+  }
+
+  .container {
+    margin-top: 5%;
+  }

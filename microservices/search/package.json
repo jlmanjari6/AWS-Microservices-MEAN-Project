@@ -1,0 +1,32 @@
+{
+  "name": "cc_project_back_end",
+  "version": "1.0.0",
+  "description": "Secured light-weight tourism application backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "nodejs",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "2.8.5",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "mysql": "2.18.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.8.6",
+    "@babel/node": "7.8.4",
+    "@babel/preset-env": "7.8.6",
+    "nodemon": "2.0.2"
+  }
+}

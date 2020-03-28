@@ -1,0 +1,39 @@
+<form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+    <div class="container">
+        <div style="width: 50%;" class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"> Login </h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" required #emailControl="ngModel" ngModel type="text"
+                        class="form-control">
+                    <div class="alert alert-danger" *ngIf="emailControl.touched && !emailControl.value">Email
+                        is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="password"> Password</label>
+                    <input id="password" type="password" required #pwdControl="ngModel" name="password" ngModel
+                        class="form-control">
+                    <div class="alert alert-danger" *ngIf="pwdControl.touched &&!pwdControl.valid">Password
+                        is required</div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button id="btnLogin" type="submit" class="btn btn-primary">Login</button>
+                <a style="margin-left: 2%;" routerLink="/ForgotPassword">Forgot password?</a>
+                <div style="float: right;margin-top: 6px;">
+                    Don't have an account? <a routerLink="/SignUp">SignUp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="container">
+    <div *ngIf="error" style="width: 50%" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{ error }}
+    </div>
+</div>

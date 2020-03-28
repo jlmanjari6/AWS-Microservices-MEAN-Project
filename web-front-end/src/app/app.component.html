@@ -1,0 +1,37 @@
+<div >
+    <nav style="background: darkblue;" class="navbar navbar-inverse">
+        <ul style="font-family: sans-serif;font-size: 18px;color:white" class="nav navbar-nav">
+            <li>
+                <a routerLink="Search">Search</a>
+            </li>                          
+            <li>
+                <a *ngIf="authService.getAuthStatus()" routerLink="Booking">Booking</a>
+            </li> 
+            <li>
+                <a routerLink="Analytics">Analytics</a>
+            </li>                
+        </ul>        
+        <ul style="font-family: sans-serif;font-size: 10pt;float: right;font-weight: bolder;color:white" class="nav navbar-nav">
+            <li>
+                <a *ngIf="!authService.getAuthStatus()" routerLink="Login">Login</a>
+            </li>
+            <li>
+                <a *ngIf="!authService.getAuthStatus()" routerLink="SignUp">SignUp</a>
+            </li>
+            <li>
+                <a *ngIf="authService.getAuthStatus()">Logged in as: {{ authService.getUser() }}</a>
+            </li>
+            <li>
+                <a routerLink="Ticket" *ngIf="authService.getAuthStatus()">Ticket History</a>
+            </li>
+            <li>
+                <a routerLink="MyProfile" *ngIf="authService.getAuthStatus()">My Profile</a>
+            </li> 
+            <li>
+                <a style="cursor: pointer;" *ngIf="authService.getAuthStatus()" (click)="logout()">Logout</a>
+            </li>             
+        </ul>
+    </nav>
+
+    <router-outlet></router-outlet>
+</div>

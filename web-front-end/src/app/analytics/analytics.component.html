@@ -1,0 +1,40 @@
+<div class="container">
+  <mat-card>
+    <h4 style="align-content: center;"> Top 5 searched places</h4>
+        <br/><br/><br/>
+<div style="display: block;">
+  <canvas baseChart 
+    [data]="pieChartData" 
+    [labels]="pieChartLabels" 
+    [chartType]="pieChartType"
+    [options]="pieChartOptions"
+    [plugins]="pieChartPlugins"
+    [legend]="pieChartLegend"
+    [colors]="pieChartColors">
+  </canvas>
+</div>
+</mat-card>
+</div>
+<br/>
+<br/>
+<div class="container">
+  <mat-card>
+    <h4 style="align-content: center;"> Number of bookings made last week</h4>
+        <br/><br/><br/>
+      <div>
+        <div style="display: block">
+          <canvas baseChart
+                  [datasets]="barChartData"
+                  [labels]="mbarChartLabels"
+                  [options]="barChartOptions"
+                  [colors]="barChartColors"
+                  [legend]="barChartLegend"
+                  [chartType]="barChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)">
+            </canvas>
+        </div>
+      </div>
+  </mat-card>
+</div>
+<br/>

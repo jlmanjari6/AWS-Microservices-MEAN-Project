@@ -1,0 +1,21 @@
+<form style="align-items: center" #confirmloginForm="ngForm" (ngSubmit)="confirmLogin(confirmloginForm)">
+    <div class="container">
+        <div style="width: fit-content;" class="jumbotron">
+            <p> A verification code has been sent to your registered mobile number.</p>
+            <p>Please enter the verification code to login.</p>
+            <div class="form-group">
+                <input id="code" name="code" required #codeControl="ngModel" ngModel type="text" class="form-control">
+                <div class="alert alert-danger" *ngIf="codeControl.touched && !codeControl.value">Enter the verification
+                    code</div>
+            </div>
+            <button id="btnLogin" type="submit" class="btn btn-success">Verify Code</button>
+        </div>
+    </div>
+</form>
+<div class="container">
+    <div *ngIf="error" style="width: fit-content" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{ error }}
+    </div>
+</div>

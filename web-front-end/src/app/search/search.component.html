@@ -1,0 +1,27 @@
+<div class="inputContainer">
+    <input type="text" #textbox (keyup.enter)="onSearch(textbox.value)"
+        placeholder="Search by location/attraction name" />
+</div>
+
+<div *ngFor="let attraction of attractions" class="container">
+    <mat-card class="example-card">
+        <mat-card-title>{{ attraction.attraction }}</mat-card-title>
+        <img mat-card-image src='{{ attraction.imageURL }}' alt="">
+        <mat-card-content>
+            <h4> Highlights </h4>
+            <br>
+            <p>
+                {{ attraction.description }}
+            </p>
+        </mat-card-content>
+    </mat-card>
+</div>
+<button *ngIf="attractions.length>0" mat-raised-button color="primary" (click)="onClickBook()">Book</button>
+
+<div class="error-container">
+    <div *ngIf="error" style="width: 70%" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{ error }}
+    </div>
+</div>
