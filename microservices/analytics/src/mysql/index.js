@@ -18,8 +18,8 @@ const callback = (error, result, fields) => {
 con.connect(function(err) {
   if (err) throw err;
   console.log("Database Connected!");
-  con.query("CREATE DATABASE IF NOT EXISTS analytics;");
-  con.query("USE analytics;");
+  con.query("CREATE DATABASE IF NOT EXISTS ccgroup7;");
+  con.query("USE ccgroup7;");
   // mysql table cration script
   con.query(DB_CREATIION, callback);
   //   con.end();

@@ -2,7 +2,7 @@ import { APIService } from './../helpers/services/APIService';
 import { AuthService } from '../helpers/services/AuthService';
 import { Ticket } from './../helpers/models/Ticket.model';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from "@angular/router";
 import { DataService } from "../helpers/services/DataService";
 
@@ -16,7 +16,8 @@ export class BookingComponent implements OnInit {
   minDate = new Date();
   date = new FormControl(new Date());
   selectedFromLocation: string;
-  selectedToLocation: string;
+  selectedToLocation: any;
+  productForm = new FormGroup({ selLocation: new FormControl("") });
   noOfPassengers: string;
   dataSource: any;
   selectedBus: Bus;
@@ -26,11 +27,18 @@ export class BookingComponent implements OnInit {
   isBusAllowed: boolean = false;
   locations: any;
   destinationId = "";
-
+  fromComponent: string;
+  searchedLocationId: string;
 
   constructor(private router: Router, private dataService: DataService, private authService: AuthService,
     private apiSvc: APIService) {
     this.getLocations();
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation.extras.state as { fromComponent: string, locationId: string };
+    if (state != undefined) {
+      this.fromComponent = state.fromComponent;
+      this.searchedLocationId = state.locationId;
+    }
   }
 
   ngOnInit(): void {
@@ -44,18 +52,46 @@ export class BookingComponent implements OnInit {
       this.locations = [];
       for (let i = 0; i < res.length; i++) {
         this.locations.push({ id: res[i]["id"], name: res[i]["name"] });
+        if (this.fromComponent == 'search') {
+          if (res[i]["id"] == this.searchedLocationId) {
+            this.productForm.controls['selLocation'].setValue(res[i]["id"]);
+            this.selectedToLocation = { id: res[i]["id"], name: res[i]["name"] };
+          }
+        }
       }
     });
   }
 
   findBuses(): void {
+    console.log(this.productForm.controls["selLocation"]);
+    const temp = (this.productForm.controls["selLocation"]).value;
+    if (this.selectedToLocation == undefined) {
+      this.selectedToLocation = {};
+    }
+      for (let i = 0; i < this.locations.length; i++) {
+        if (this.locations[i]["id"] == temp) {
+          this.selectedToLocation["id"] = temp;
+          this.selectedToLocation["name"] = this.locations[i]["name"];
+        }
+      }
+    // if (this.selectedToLocation == undefined) {
+    //   this.selectedToLocation = {};
+    //   for (let i = 0; i < this.locations.length; i++) {
+    //     if (this.locations[i]["id"] == temp) {
+    //       this.selectedToLocation["id"] = temp;
+    //       this.selectedToLocation["name"] = this.locations[i]["name"];
+    //     }
+    //   }
+    // }
+    console.log(this.selectedToLocation);
+
     if (this.selectedFromLocation == undefined || this.selectedToLocation == undefined
       || !this.date.touched || this.noOfPassengers == undefined) {
       this.error = "All fields are required!"
       this.isBusAllowed = false;
       return;
     }
-    if (this.selectedFromLocation == this.selectedToLocation) {
+    if (this.selectedFromLocation["name"] == this.selectedToLocation["name"]) {
       this.error = "Source and destination must not be same!"
       this.isBusAllowed = false;
       return;
@@ -65,6 +101,7 @@ export class BookingComponent implements OnInit {
 
     // get bus data from DB
     this.destinationId = this.selectedToLocation["id"];
+    console.log(this.destinationId);
     this.apiSvc.getBuses(parseInt(this.destinationId)).subscribe(res => {
       if (res.length == 0) {
         this.error = "Invalid inputs! Please try again!";

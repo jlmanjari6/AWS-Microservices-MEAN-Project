@@ -45,7 +45,8 @@ export class SearchComponent implements OnInit {
   onClickBook(): void {
     // check if a login session exists - yes: navigate to booking page, no: navigate to login page
     if (this.authService.getAuthStatus()) {
-      this.router.navigate(["/Booking"]);
+      const navigationExtras: NavigationExtras = { state: { fromComponent: 'search', locationId: this.attractions[0]["id"] } };
+      this.router.navigate(["/Booking"], navigationExtras);
     }
     else {
       const navigationExtras: NavigationExtras = { state: { fromComponent: 'search' } };

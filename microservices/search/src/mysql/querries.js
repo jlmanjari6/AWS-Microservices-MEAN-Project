@@ -10,8 +10,6 @@ module.exports = {
   CREATE TABLE IF NOT EXISTS \`ccgroup7\`.\`locations\` (
     \`id\` INT NOT NULL AUTO_INCREMENT,
     \`name\` VARCHAR(45) NOT NULL,
-    \`numberOfHits\` INT NULL,
-    \`imageURL\` VARCHAR(255) NULL,
     PRIMARY KEY (\`id\`))
   ENGINE = InnoDB;
 

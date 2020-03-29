@@ -32,28 +32,28 @@ app.get("/analytics/topsearchedplaces", (req, res) => {
       }
     );
   });
+});
 
-  // POST api to increase the number of hits
-app.post("/search/location", (req, res) => {
+ // POST api to increase the number of hits
+ app.post("/analytics/location", (req, res) => {
   const {
-      body: {
-          locationId
-      } = {}
+    body: {
+      locationId
+    } = {}
   } = req;
   if (locationId) {
-      console.log("Number of hits increment Request received");
-      con.connect(err => {
-          con.query(
-              `UPDATE ccgroup7.locations SET numberOfHits = numberOfHits+1 WHERE id = ${locationId};`,
-              (err, result, fields) => {
-                  if (err) res.send(err);
-                  if (result) res.send(result);
-              }
-          );
-      });
+    console.log("Number of hits increment Request received");
+    mysqlCon.connect(err => {
+      mysqlCon.query(
+        `UPDATE ccgroup7.locations SET numberOfHits = numberOfHits+1 WHERE id = ${locationId};`,
+        (err, result, fields) => {
+          if (err) res.send(err);
+          if (result) res.send(result);
+        }
+      );
+    });
   } else {
-      console.log("Missing a parameter");
+    console.log("Missing a parameter");
   }
-});
 });
 

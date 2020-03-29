@@ -1,17 +1,16 @@
 module.exports = {
   DB_CREATIION: `
-  CREATE SCHEMA IF NOT EXISTS \`analytics\` DEFAULT CHARACTER SET latin1 ;
-  USE \`analytics\` ;
+  CREATE SCHEMA IF NOT EXISTS \`ccgroup7\` DEFAULT CHARACTER SET latin1 ;
+  USE \`ccgroup7\` ;
 
   -- -----------------------------------------------------
-  -- Table \`analytics\`.\`locations\`
+  -- Table \`ccgroup7\`.\`locations\`
   -- -----------------------------------------------------
 
-  CREATE TABLE IF NOT EXISTS \`analytics\`.\`locations\` (
+  CREATE TABLE IF NOT EXISTS \`ccgroup7\`.\`locations\` (
     \`id\` INT NOT NULL AUTO_INCREMENT,
     \`name\` VARCHAR(45) NOT NULL,
-    \`numberOfHits\` INT NULL,
-    \`imageURL\` VARCHAR(255) NULL,
+    \`numberOfHits\` INT NULL
     PRIMARY KEY (\`id\`))
   ENGINE = InnoDB;  
   `

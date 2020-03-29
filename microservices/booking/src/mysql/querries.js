@@ -50,12 +50,7 @@ module.exports = {
     \`busId\` INT NOT NULL,
     PRIMARY KEY (\`id\`),
     INDEX \`user_idx\` (\`userId\` ASC),
-    INDEX \`bus_idx\` (\`busId\` ASC),
-    CONSTRAINT \`user_ticket\`
-      FOREIGN KEY (\`userId\`)
-      REFERENCES \`ccgroup7\`.\`users\` (\`id\`)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
+    INDEX \`bus_idx\` (\`busId\` ASC),    
     CONSTRAINT \`bus_ticket\`
       FOREIGN KEY (\`busId\`)
       REFERENCES \`ccgroup7\`.\`buses\` (\`id\`)
