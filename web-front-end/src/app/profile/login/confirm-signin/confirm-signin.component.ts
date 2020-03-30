@@ -3,7 +3,7 @@ import { APIService } from './../../../helpers/services/APIService';
 import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Auth } from 'aws-amplify';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-confirm-signin',
@@ -17,12 +17,14 @@ export class ConfirmSigninComponent implements OnInit {
   authService: AuthService;
   error: string;
   fromComponent: string;
+  searchedLocationId: string;
 
   constructor(authService: AuthService, private router: Router, private apiSvc: APIService) {
     this.authService = authService;
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation.extras.state as { fromComponent: string };
+    const state = navigation.extras.state as { fromComponent: string, locationId:string };
     this.fromComponent = state.fromComponent;
+    this.searchedLocationId = state.locationId;
   }
 
   ngOnInit(): void {
@@ -30,9 +32,7 @@ export class ConfirmSigninComponent implements OnInit {
 
   confirmLogin(confirmloginForm: NgForm): void {
     this.code = confirmloginForm.value.code;
-    this.cognitoUser = this.authService.getCognitoUser();
-
-    // to be uncommented later
+    this.cognitoUser = this.authService.getCognitoUser();    
 
     Auth.confirmSignIn(this.cognitoUser, this.code, "SMS_MFA")
       .then(data => {
@@ -41,7 +41,8 @@ export class ConfirmSigninComponent implements OnInit {
 
         // if we landed here from search page, navigate to booking page, else to search page
         if (this.fromComponent == "search") {
-          this.router.navigate(['/Booking']);
+          const navigationExtras: NavigationExtras = { state: { fromComponent: this.fromComponent, locationId: this.searchedLocationId } };
+          this.router.navigate(['/Booking'], navigationExtras);
         }
         else {
           this.router.navigate(['/Search']);
@@ -50,11 +51,6 @@ export class ConfirmSigninComponent implements OnInit {
         console.log(err);
         this.error = err.message;
       });
-
-
-    // to be deleted later
-
-    // this.authService.setAuthStatus(true);
 
     // get userId from DB
     this.apiSvc.getUserID(this.authService.getUser()).subscribe(res => {

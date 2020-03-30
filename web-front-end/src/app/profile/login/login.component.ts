@@ -15,15 +15,17 @@ export class LoginComponent implements OnInit {
   authService: AuthService;
   error: string;
   fromComponent: string;
+  searchedLocationId: string;
 
   constructor(private router: Router, authService: AuthService) {
     this.authService = authService;
 
     // check from where we landed to login page - from search page?
     const navigation = this.router.getCurrentNavigation();
-    const state = navigation.extras.state as { fromComponent: string };
+    const state = navigation.extras.state as { fromComponent: string, locationId: string };
     if (state != undefined) {
       this.fromComponent = state.fromComponent;
+      this.searchedLocationId = state.locationId;
     }
   }
 
@@ -44,7 +46,7 @@ export class LoginComponent implements OnInit {
       this.authService.setCognitoUser(data); //to save the user data
 
       // pass the page source info to ConfirmSignIn page
-      const navigationExtras: NavigationExtras = { state: { fromComponent: this.fromComponent } };
+      const navigationExtras: NavigationExtras = { state: { fromComponent: this.fromComponent, locationId: this.searchedLocationId } };
       this.router.navigate(['/ConfirmSignIn'], navigationExtras);
     })
       .catch(err => {
