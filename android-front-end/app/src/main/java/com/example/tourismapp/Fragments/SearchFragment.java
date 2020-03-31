@@ -100,7 +100,7 @@ public class SearchFragment extends Fragment implements RViewAdapter.onClickList
     }
 
     private void getLocations(String city) {
-        final String url = "http://search-load-balancer-825170455.us-east-1.elb.amazonaws.com/search/locations/" + city;
+        final String url = "https://fv2z97pt9c.execute-api.us-east-1.amazonaws.com/dev/search/locations/" + city;
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
             new Response.Listener<JSONArray>() {
