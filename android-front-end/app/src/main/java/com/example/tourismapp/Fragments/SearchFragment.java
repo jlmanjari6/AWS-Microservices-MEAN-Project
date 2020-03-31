@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -141,11 +142,16 @@ public class SearchFragment extends Fragment implements RViewAdapter.onClickList
 
     @Override
     public void onItemClickListener(int position, com.example.tourismapp.Models.Location destination) {
-        Toast.makeText(getContext(),"Book ticket for " + (destination.getId()) + ' ' +  (destination.getAttraction()), Toast.LENGTH_LONG).show();
         // check if user is logged in
         String userEmail = ((GlobalStorage) getActivity().getApplication()).getUserEmail();
         if(userEmail == null) {
-            // user not logged in
+            // if not logged in then redirect to login page before allowing to book ticket
+            Toast.makeText(getContext(),"Login required!", Toast.LENGTH_SHORT).show();
+            LoginFragment fragment = new LoginFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(((ViewGroup) (getView().getParent())).getId(), fragment);
+            ft.addToBackStack(null);
+            ft.commit();
         }
         else {
             // user logged in
