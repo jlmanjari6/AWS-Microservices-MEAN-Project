@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tourismapp.Helpers.DownloadLocationImageAsyncTask;
 import com.example.tourismapp.Models.Location;
 import com.example.tourismapp.R;
 
@@ -43,10 +44,12 @@ public class RViewAdapter extends RecyclerView.Adapter<RViewAdapter.ViewHolder> 
         {
             final Location destination = alLocation.get(position);
 
-            holder.locationImage.setImageResource(R.drawable.ic_booking);
             holder.locationName.setText(destination.getAttraction());
             holder.locationCity.setText(destination.getCity());
             holder.locationDescription.setText(destination.getDesc());
+            // downloading image from s3 bucket
+            DownloadLocationImageAsyncTask locationImage = new DownloadLocationImageAsyncTask(holder.locationImage);
+            locationImage.execute(destination.getImageURL());
 
             holder.book.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -7,7 +7,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10sp"
+        android:layout_marginHorizontal="5sp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -18,21 +20,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="Enter location"
-                android:textSize="25sp"
-                android:layout_centerInParent="true"
-                android:id="@+id/destination" />
+                android:inputType="text"
+                android:id="@+id/etLocation"
+                android:imeOptions="actionDone" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="0.3"
+            android:layout_weight="0.1"
             android:layout_height="wrap_content">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/search"
+                android:id="@+id/ibSearch"
                 android:src="@drawable/ic_search"
+                android:padding="15sp"
                 android:scaleType="fitCenter" />
 
         </LinearLayout>

@@ -2,7 +2,7 @@ package com.example.tourismapp.Models;
 
 public class Location {
     int id;
-    String city,attraction,desc;
+    String city,attraction,desc, imageURL;
 
     public int getId() {
         return id;
@@ -34,5 +34,13 @@ public class Location {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

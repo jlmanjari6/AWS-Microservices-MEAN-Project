@@ -2,36 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/cardview_light_background"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginBottom="10dp"
+    android:elevation="5dp"
+    android:padding="10sp"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:gravity="center"
+        >
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.2">
+            android:layout_height="match_parent"
+            android:layout_weight="0.4">
+
 
             <ImageView
                 android:id="@+id/photo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_login" />
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8">
+            android:layout_weight="0.6"
+            android:layout_marginLeft="10sp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,15 +65,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="attraction"
-                            android:textSize="25sp"
-                            />
+                            android:textSize="25sp" />
 
                         <TextView
                             android:id="@+id/city"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="city"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp" />
 
                     </LinearLayout>
 
@@ -84,7 +94,8 @@
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Description" />
+                    android:hint="Description"
+                    android:paddingEnd="10dp" />
             </LinearLayout>
 
 
