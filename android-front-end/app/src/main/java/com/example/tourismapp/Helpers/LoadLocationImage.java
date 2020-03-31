@@ -14,10 +14,10 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DownloadLocationImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
+public class LoadLocationImage extends AsyncTask<String, Void, Bitmap> {
     private final WeakReference<ImageView> imageViewWeakReference;
 
-    public DownloadLocationImageAsyncTask(ImageView imageView) {
+    public LoadLocationImage(ImageView imageView) {
         imageViewWeakReference = new WeakReference<ImageView>(imageView);
     }
 
