@@ -39,6 +39,7 @@ export class BookingComponent implements OnInit {
       this.fromComponent = state.fromComponent;
       this.searchedLocationId = state.locationId;
     }
+    console.log(this.fromComponent, this.searchedLocationId);
   }
 
   ngOnInit(): void {

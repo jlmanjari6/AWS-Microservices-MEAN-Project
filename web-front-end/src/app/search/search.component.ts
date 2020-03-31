@@ -49,7 +49,7 @@ export class SearchComponent implements OnInit {
       this.router.navigate(["/Booking"], navigationExtras);
     }
     else {
-      const navigationExtras: NavigationExtras = { state: { fromComponent: 'search' } };
+      const navigationExtras: NavigationExtras = { state: { fromComponent: 'search', locationId: this.attractions[0]["id"] } };
       this.router.navigate(["/Login"], navigationExtras);
     }
   }

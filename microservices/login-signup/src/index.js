@@ -29,8 +29,8 @@ app.get("/profile", (req, res) => {
       console.log("Register Request received");
       con.connect(err => {
           con.query(
-              `INSERT INTO ccgroup7.users (firstname, lastname, email, password, age, gender)
-      VALUES ('${firstName}', '${lastName}', '${email}', '${password}', '${age}', '${gender}')`,
+              `INSERT INTO ccgroup7.users (firstname, lastname, email, age, gender)
+      VALUES ('${firstName}', '${lastName}', '${email}', '${age}', '${gender}')`,
               (err, result, fields) => {
                   if (err) res.send(err);
                   if (result) res.send(result);                        
