@@ -8,9 +8,10 @@ import { APIService } from '../../helpers/services/APIService';
   templateUrl: './tickethistory.component.html',
   styleUrls: ['./tickethistory.component.css']
 })
-export class TickethistoryComponent implements OnInit {  
+export class TickethistoryComponent implements OnInit {
 
   tickets = [];
+  error: string;
 
   constructor(private authService: AuthService, private regSvc: APIService,
     private router: Router) {
@@ -26,10 +27,14 @@ export class TickethistoryComponent implements OnInit {
   }
 
   getTicketsforCurrentUser(): void {
-    this.regSvc.getTicketsforCurrentUser(this.authService.getUserID()).subscribe(res => {            
+    this.error = "";
+    this.regSvc.getTicketsforCurrentUser(this.authService.getUserID()).subscribe(res => {
       for (let i = 0; i < res.length; i++) {
         this.tickets.push(res[i]);
-      }      
-    });
+      }
+      if (res.length == 0) {
+        this.error = "No trips booked!"
+      }
+    });    
   }
 }
