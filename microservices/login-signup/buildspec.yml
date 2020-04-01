@@ -21,4 +21,6 @@ phases:
             - docker push 864114915596.dkr.ecr.us-east-1.amazonaws.com/profiledb:profile
             - printf '[{"name":"profile","imageUri":"%s"}]' $REPOSITORY_URI:profile > imagedefinitions.json
             - cat imagedefinitions.json
+artifacts:
+    files: imagedefinitions.json
     
