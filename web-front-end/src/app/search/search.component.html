@@ -1,6 +1,5 @@
 <div class="inputContainer">
-    <input type="text" #textbox (keyup.enter)="onSearch(textbox.value)"
-        placeholder="Search by location/attraction name" />
+    <input type="text" #textbox (keyup.enter)="onSearch(textbox.value)" placeholder="Search location here" />
 </div>
 
 <div *ngFor="let attraction of attractions" class="container">
