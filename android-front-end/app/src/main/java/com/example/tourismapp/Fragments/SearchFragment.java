@@ -1,6 +1,7 @@
 package com.example.tourismapp.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import com.example.tourismapp.Helpers.GlobalStorage;
 import com.example.tourismapp.Helpers.RViewAdapter;
 import com.example.tourismapp.Models.Location;
 import com.example.tourismapp.R;
+import com.example.tourismapp.bookingPage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +48,7 @@ public class SearchFragment extends Fragment implements RViewAdapter.onClickList
     RViewAdapter rviewAdapter;
     private RequestQueue queue;
     ArrayList<com.example.tourismapp.Models.Location> alLocations;
+    int userId;
 
     @Nullable
     @Override
@@ -143,12 +146,20 @@ public class SearchFragment extends Fragment implements RViewAdapter.onClickList
     @Override
     public void onItemClickListener(int position, com.example.tourismapp.Models.Location destination) {
         // check if user is logged in
+        Location location = destination;
+        String locationName = location.getCity();
+        String locationId = String.valueOf(location.getId());
         String userEmail = ((GlobalStorage) getActivity().getApplication()).getUserEmail();
         if(userEmail == null) {
             // if not logged in then redirect to login page before allowing to book ticket
             Toast.makeText(getContext(),"Login required!", Toast.LENGTH_SHORT).show();
             LoginFragment fragment = new LoginFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("flag","1");
+            bundle.putString("locationId",locationId);
+            bundle.putString("locationName",locationName);
             FragmentTransaction ft = getFragmentManager().beginTransaction();
+            fragment.setArguments(bundle);
             ft.replace(((ViewGroup) (getView().getParent())).getId(), fragment);
             ft.addToBackStack(null);
             ft.commit();
@@ -156,12 +167,19 @@ public class SearchFragment extends Fragment implements RViewAdapter.onClickList
         else {
             // user logged in
             // fetch user id
-            int userId = ((GlobalStorage) getActivity().getApplication()).getUserId();
+            userId = ((GlobalStorage) getActivity().getApplication()).getUserId();
+
 //          BookingFragment fragment = new BookingFragment();
 //          FragmentTransaction ft = getFragmentManager().beginTransaction();
 //          ft.replace(((ViewGroup) (getView().getParent())).getId(), fragment);
 //          ft.addToBackStack(null);
 //          ft.commit();
+            Bundle bundle = new Bundle();
+            bundle.putString("name",locationName);
+            bundle.putString("locationId",locationId);
+            Intent intent = new Intent(getContext(), bookingPage.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
 }

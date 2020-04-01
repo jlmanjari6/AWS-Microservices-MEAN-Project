@@ -192,7 +192,7 @@ public class RegistrationFragment extends Fragment {
 
     public void saveUsertoDB() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.18.16.1:3000/") // replace your local ip address here (but not localhost/127.0.0.1)
+                .baseUrl("https://fv2z97pt9c.execute-api.us-east-1.amazonaws.com/dev/profile/") // replace your local ip address here (but not localhost/127.0.0.1)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

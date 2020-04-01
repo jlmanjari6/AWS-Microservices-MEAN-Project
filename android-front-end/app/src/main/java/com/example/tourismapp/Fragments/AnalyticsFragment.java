@@ -68,7 +68,7 @@ public class AnalyticsFragment extends Fragment {
     public void getTopPlaces() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http:192.168.56.1:3000/") // replace your local ip address here (but not localhost/127.0.0.1)
+                .baseUrl("https://fv2z97pt9c.execute-api.us-east-1.amazonaws.com/dev/analytics/") // replace your local ip address here (but not localhost/127.0.0.1)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -120,7 +120,7 @@ public class AnalyticsFragment extends Fragment {
         ArrayList<BarEntry> datavals=new ArrayList<BarEntry>();
         ArrayList<String> xAxisLabel = new ArrayList<>();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http:192.168.56.1:3000/")// replace your local ip address here (but not localhost/127.0.0.1)
+                .baseUrl("https://fv2z97pt9c.execute-api.us-east-1.amazonaws.com/dev/booking/")// replace your local ip address here (but not localhost/127.0.0.1)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetrofitApiInterface service = retrofit.create(RetrofitApiInterface.class);

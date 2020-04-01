@@ -72,7 +72,7 @@ public class TicketHistoryFragment extends Fragment {
     public void ticketHistory(Context c) {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http:192.168.56.1:3000/")
+                .baseUrl("https://fv2z97pt9c.execute-api.us-east-1.amazonaws.com/dev/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

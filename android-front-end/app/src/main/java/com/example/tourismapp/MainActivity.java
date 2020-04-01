@@ -22,17 +22,11 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
-    String flag = null;
+    int userId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        flag = getIntent().getStringExtra("flag");
-        System.out.println(flag);
-        if(flag != null){
-            Toast.makeText(getApplicationContext(),"Ticket is booked", Toast.LENGTH_LONG).show();
-        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,13 +43,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_search);
         }
-        // set visibilities
-        navigationView = findViewById(R.id.nav_view);
-        Menu nav_Menu = navigationView.getMenu();
-        nav_Menu.findItem(R.id.nav_history).setVisible(false);
-        nav_Menu.findItem(R.id.nav_logout).setVisible(false);
-        nav_Menu.findItem(R.id.nav_login).setVisible(true);
-        nav_Menu.findItem(R.id.nav_registration).setVisible(true);
+
+        String userEmail = ((GlobalStorage) this.getApplication()).getUserEmail();
+        if(userEmail == null) {
+            // user not logged in
+            navigationView = findViewById(R.id.nav_view);
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.nav_history).setVisible(false);
+            nav_Menu.findItem(R.id.nav_logout).setVisible(false);
+            nav_Menu.findItem(R.id.nav_login).setVisible(true);
+            nav_Menu.findItem(R.id.nav_registration).setVisible(true);
+        }
+        else {
+            // user logged in
+            // fetch user id
+            userId = ((GlobalStorage) this.getApplication()).getUserId();
+            //int userId = ((GlobalStorage) this.getApplication()).getUserId();
+            navigationView = (NavigationView) findViewById(R.id.nav_view);
+            Menu nav_Menu = navigationView.getMenu();
+
+            nav_Menu.findItem(R.id.nav_history).setVisible(true);
+            nav_Menu.findItem(R.id.nav_logout).setVisible(true);
+            nav_Menu.findItem(R.id.nav_login).setVisible(false);
+            nav_Menu.findItem(R.id.nav_registration).setVisible(false);
+        }
     }
 
     @Override
