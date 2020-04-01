@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+    pre_build:
+        commands:
+            - echo Logging in to Amazon ECR....
+            - aws --version
+            - $(aws ecr get-login-password --region us-east-1)
+            - REPOSITORY_URI=864114915596.dkr.ecr.us-east-1.amazonaws.com/profiledb
+    build:
+        commands:
+            - echo Build started on `date`..
+            - echo Building docker image....
+            - sudo docker build microservices/login-signup -t $REPOSITORY_URI:latest .
+            - sudo docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:profile
+    post_build:
+        commands:
+            - echo Build completed on `date`
+            - echo Pushing the docker image to ECR repository
+            - sudo docker push 864114915596.dkr.ecr.us-east-1.amazonaws.com/profiledb:profile
+            - printf '[{"name":"profile","imageUri":"%s"}]' $REPOSITORY_URI:profile > imagedefinitions.json
+            - cat imagedefinitions.json
+    artifacts:
+        files: imagedefinitions.json
