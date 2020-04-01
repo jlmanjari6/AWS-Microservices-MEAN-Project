@@ -12,10 +12,8 @@ phases:
             - echo Build started on `date`..
             - echo Building docker image....
             - ls
-            - docker build -t $REPOSITORY_URI:latest -f ./microservices/login-signup/Dockerfile .
-            - docker images
-            - docker tag $REPOSITORY_URI:latest profile
-            - docker images
+            - docker build -t $REPOSITORY_URI:profile -f ./microservices/login-signup/Dockerfile .
+            - docker images           
     post_build:
         commands:
             - echo Build completed on `date`
@@ -23,4 +21,6 @@ phases:
             - docker push 864114915596.dkr.ecr.us-east-1.amazonaws.com/profiledb:profile
             - printf '[{"name":"profile","imageUri":"%s"}]' $REPOSITORY_URI:profile > imagedefinitions.json
             - cat imagedefinitions.json
+artifacts:
+    files: imagedefinitions.json
     

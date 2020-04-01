@@ -31,6 +31,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.Random;
 
 import com.example.tourismapp.Fragments.SearchFragment;
 import com.example.tourismapp.Helpers.GlobalStorage;
@@ -154,8 +155,9 @@ public class generatedTicketLayout extends AppCompatActivity {
     }
 
     private void saveBitMap(Bitmap bitmap) {
-
-        String fileName = Environment.getExternalStorageDirectory().toString() + "/"+"ticket_"+busNo+"_"+".jpg";
+        Random random = new Random();
+        int rand1 = random.nextInt(1000);
+        String fileName = Environment.getExternalStorageDirectory().toString() + "/"+System.currentTimeMillis()+"ticket_"+busNo+"_"+String.valueOf(rand1)+".jpg";
         //ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
         //File imagePath = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory() + "/ticket.png");
         File file = new File(fileName);
@@ -170,5 +172,10 @@ public class generatedTicketLayout extends AppCompatActivity {
         } catch (IOException e) {
             Log.e("Error", e.getMessage(), e);
         }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
     }
 }

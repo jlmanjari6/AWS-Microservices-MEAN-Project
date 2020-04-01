@@ -92,7 +92,7 @@ public class bookingPage extends AppCompatActivity implements DatePickerDialog.O
         fareTV = (TextView) findViewById(R.id.fare);
         busID_tv = (TextView) findViewById(R.id.busId);
         spinner = (Spinner) findViewById(R.id.spinner1);
-        getBusNo(locationID, busNoSpinner, fromTime, endTime, fareTV, busID_tv, spinner);
+
         spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -183,6 +183,7 @@ public class bookingPage extends AppCompatActivity implements DatePickerDialog.O
         calendar.set(Calendar.MONTH, Month);
         calendar.set(Calendar.DAY_OF_MONTH, Day);
 
+        Month = Month + 1;
         TextView textView = (TextView) findViewById(R.id.dateEdit);
         textView.setText(Month+"/"+Day+"/"+Year);
 
@@ -214,8 +215,14 @@ public class bookingPage extends AppCompatActivity implements DatePickerDialog.O
                     
                     fromLocation_sp.setOnItemSelectedListener(new OnItemSelectedListener() {
                         @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                            locationID = locationId.get(position);
+                            busNo.clear();
+                            busId.clear();
+                            busFromTime.clear();
+                            busEndTime.clear();
+                            fare.clear();
+                            getBusNo(locationID, busNoSpinner, fromTime, endTime, fareTV, busID_tv, spinner);
                         }
 
                         @Override
