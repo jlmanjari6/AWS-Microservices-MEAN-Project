@@ -11,7 +11,7 @@ phases:
         commands:
             - echo Build started on `date`..
             - echo Building docker image....
-            - docker build -t $REPOSITORY_URI:latest -f microservices/login-signup .
+            - docker build -t $REPOSITORY_URI:latest -f ./microservices/login-signup .
             - docker tag $REPOSITORY_URI:latest profile
             - docker images
     post_build:
