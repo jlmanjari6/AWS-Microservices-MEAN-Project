@@ -13,14 +13,20 @@ import { FormControl } from '@angular/forms';
 })
 export class SignupComponent implements OnInit {
 
-  phonePattern = '^(\\+1)[0-9]{10}$';
-  emailPattern = '/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i';
-  passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\^$*.\[\]{}\(\)?\-“!@#%&/,><\’:;|_~`])\S{6,99}$/';
+  phonePattern = /^(\\+1)[0-9]{10}$/;
+  emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\^$*.\[\]{}\(\)?\-“!@#%&/,><\’:;|_~`])\S{6,99}$/;
   maxDate = new Date();
   minDate = new Date(new Date().getFullYear() - 100, 0, 1);
   date = new FormControl(new Date());
   age: number;
   error: string;
+
+  pwdLengthExp = new RegExp('^.{6,99}$');
+  lowercaseExp = new RegExp('(?=.*[a-z])');
+  uppercaseExp = new RegExp('(?=.*[A-Z])');
+  numericExp = new RegExp('(?=.*[0-9])');
+  specialCharacterExp = new RegExp('(?=.*[\^$*.\[\]{}\(\)?\-“!@#%&/,><\’:;|_~`])');
 
   constructor(private router: Router, private authService: AuthService, private registrationSvc: APIService) { }
 

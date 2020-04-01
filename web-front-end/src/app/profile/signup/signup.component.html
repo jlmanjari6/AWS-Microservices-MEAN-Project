@@ -75,11 +75,26 @@
                         is required</div>
                     <div class="alert alert-danger" *ngIf="pwdControl.value && pwdControl.errors">
                         Password must contain:
-                        <br />at least 1 lowercase alphabetic character
-                        <br />at least 1 uppercase alphabetic character
+                        <!-- <br />at least 1 lowercase alphabetic character
+                        <br />at least 1 uppercase alphabeticcharacter
                         <br />at least 1 numberic character
                         <br />at least 1 special character
-                        <br />at least 6 characters long
+                        <br />at least 6 characters long -->
+                        <span *ngIf="!lowercaseExp.test(pwdControl.value)">
+                            <br />at least 1 lowercase alphabetic character
+                        </span>
+                        <span *ngIf="!uppercaseExp.test(pwdControl.value)">
+                            <br />at least 1 uppercase alphabetic character
+                        </span>
+                        <span *ngIf="!numericExp.test(pwdControl.value)">
+                            <br />at least 1 numberic character
+                        </span>
+                        <span *ngIf="!specialCharacterExp.test(pwdControl.value)">
+                            <br />at least 1 special character
+                        </span>
+                        <span *ngIf="!pwdLengthExp.test(pwdControl.value)">
+                            <br />at least 6 characters long
+                        </span>
                     </div>
                 </div>
             </div>
