@@ -13,8 +13,9 @@ import { FormControl } from '@angular/forms';
 })
 export class SignupComponent implements OnInit {
 
-  phonePattern = "^(\\+1)[0-9]{10}$";
-  emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  phonePattern = '^(\\+1)[0-9]{10}$';
+  emailPattern = '/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i';
+  passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\^$*.\[\]{}\(\)?\-“!@#%&/,><\’:;|_~`])\S{6,99}$/';
   maxDate = new Date();
   minDate = new Date(new Date().getFullYear() - 100, 0, 1);
   date = new FormControl(new Date());
@@ -26,8 +27,7 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.getAuthStatus()) {
       this.router.navigate(['/Search']);
-    }
-    else {
+    } else {
       this.router.navigate(['/SignUp']);
     }
   }
@@ -44,11 +44,11 @@ export class SignupComponent implements OnInit {
     if (mm.length != 2) {
       mm = "0" + mm;
     }
-    if (dd.length != 2) {
-      dd = "0" + dd;
+    if (dd.length !== 2) {
+      dd = '0' + dd;
     }
 
-    let dob = mm + "/" + dd + "/" + birthDate.getFullYear();    
+    let dob = mm + '/' + dd + '/' + birthDate.getFullYear();
 
     Auth.signUp({
       username: signupForm.value.email,

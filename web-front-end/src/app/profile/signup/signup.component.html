@@ -6,10 +6,10 @@
             </div>
             <div class="panel-body">
                 <div class="form-group">
-                    <label for="givenName">Given Name</label>
+                    <label for="givenName">First Name</label>
                     <input id="givenName" name="givenName" required #givenNameControl="ngModel" ngModel type="text"
                         class="form-control">
-                    <div class="alert alert-danger" *ngIf="givenNameControl.touched && !givenNameControl.valid">Given
+                    <div class="alert alert-danger" *ngIf="givenNameControl.touched && !givenNameControl.valid">First
                         name
                         is required</div>
                 </div>
@@ -22,8 +22,8 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" placeholder="Example: pat@example.com" name="email" required #emailControl="ngModel" [pattern]="emailPattern" ngModel
-                        type="email" class="form-control">
+                    <input id="email" placeholder="Example: pat@example.com" name="email" required
+                        #emailControl="ngModel" [pattern]="emailPattern" ngModel type="email" class="form-control">
                     <div class="alert alert-danger" *ngIf="emailControl.touched && !emailControl.value">Email
                         is required</div>
                     <div class="alert alert-danger" *ngIf="emailControl.value && emailControl.errors">Invalid email
@@ -49,30 +49,38 @@
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input id="phone" placeholder="Example: +19999999999" #phoneControl="ngModel" required [pattern]="phonePattern" name="phone" ngModel
-                        type="text" class="form-control">
+                    <input id="phone" placeholder="Example: +19999999999" #phoneControl="ngModel" required
+                        [pattern]="phonePattern" name="phone" ngModel type="text" class="form-control">
                     <div class="alert alert-danger" *ngIf="phoneControl.touched &&!phoneControl.value">Phone number
                         is required</div>
-                    <div class="alert alert-danger" *ngIf="phoneControl.value && phoneControl.errors">Phone number is
-                        not
-                        valid</div>
+                    <div class="alert alert-danger" *ngIf="phoneControl.value && phoneControl.errors">
+                        Phone number is not valid
+                    </div>
 
                 </div>
                 <div class="form-group">
                     <mat-form-field class="example-full-width">
                         <input name="date" [min]="minDate" [max]="maxDate" [formControl]="date" ngModel matInput
-                            [matDatepicker]="picker1" placeholder="Date of Birth">
+                            [matDatepicker]="picker1" placeholder="D.O.B. (MM/DD/YYYY)">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                 </div>
                 <div class="form-group">
-                    <label for="password">Set Password</label>
-                    <input id="password" required #pwdControl="ngModel" type="password" name="password" ngModel
-                        class="form-control">
-                    <div class="alert alert-danger" *ngIf="pwdControl.touched &&!pwdControl.valid">Password
+                    <label for="password">Password</label>
+                    <input id="password" required #pwdControl="ngModel" type="password" name="password"
+                        [pattern]="passwordPattern" ngModel class="form-control">
+                    <div class="alert alert-danger" *ngIf="pwdControl.touched &&!pwdControl.value">Password
                         is required</div>
+                    <div class="alert alert-danger" *ngIf="pwdControl.value && pwdControl.errors">
+                        Password must contain:
+                        <br />at least 1 lowercase alphabetic character
+                        <br />at least 1 uppercase alphabetic character
+                        <br />at least 1 numberic character
+                        <br />at least 1 special character
+                        <br />at least 6 characters long
+                    </div>
                 </div>
             </div>
             <div class="panel-footer">
