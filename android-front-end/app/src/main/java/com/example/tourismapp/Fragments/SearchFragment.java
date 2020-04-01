@@ -152,16 +152,18 @@ public class SearchFragment extends Fragment implements RViewAdapter.onClickList
         String userEmail = ((GlobalStorage) getActivity().getApplication()).getUserEmail();
         if(userEmail == null) {
             // if not logged in then redirect to login page before allowing to book ticket
+
             Toast.makeText(getContext(),"Login required!", Toast.LENGTH_SHORT).show();
             LoginFragment fragment = new LoginFragment();
             Bundle bundle = new Bundle();
             bundle.putString("flag","1");
             bundle.putString("locationId",locationId);
             bundle.putString("locationName",locationName);
+
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             fragment.setArguments(bundle);
             ft.replace(((ViewGroup) (getView().getParent())).getId(), fragment);
-            ft.addToBackStack(null);
+            //ft.addToBackStack(null);
             ft.commit();
         }
         else {

@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -157,9 +158,9 @@ public class generatedTicketLayout extends AppCompatActivity {
     private void saveBitMap(Bitmap bitmap) {
         Random random = new Random();
         int rand1 = random.nextInt(1000);
-        String fileName = Environment.getExternalStorageDirectory().toString() + "/"+System.currentTimeMillis()+"ticket_"+busNo+"_"+String.valueOf(rand1)+".jpg";
-        //ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
-        //File imagePath = contextWrapper.getDir("imageDir", Context.MODE_PRIVATE);//new File(Environment.getExternalStorageDirectory() + "/ticket.png");
+
+        String fileName = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + "/"+System.currentTimeMillis()+"ticket_"+busNo+"_"+String.valueOf(rand1)+".jpg";
+
         File file = new File(fileName);
         FileOutputStream fos = null;
         try {
@@ -169,6 +170,8 @@ public class generatedTicketLayout extends AppCompatActivity {
             fos.close();
         } catch (FileNotFoundException e) {
             Log.e("Error", e.getMessage(), e);
+            Toast.makeText(getApplicationContext(),"Give Permission to download ticket and try Again",Toast.LENGTH_LONG).show();
+            pdf.setVisibility(View.VISIBLE);
         } catch (IOException e) {
             Log.e("Error", e.getMessage(), e);
         }
