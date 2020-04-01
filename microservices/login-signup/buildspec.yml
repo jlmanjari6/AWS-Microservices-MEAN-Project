@@ -5,7 +5,7 @@ phases:
         commands:
             - echo Logging in to Amazon ECR....
             - aws --version
-            - $(aws ecr get-login-password --region us-east-1)
+            - $(aws ecr get-login --region us-east-1 --no-include-email)
             - REPOSITORY_URI=864114915596.dkr.ecr.us-east-1.amazonaws.com/profiledb
     build:
         commands:
