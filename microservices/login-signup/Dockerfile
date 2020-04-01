@@ -1,6 +1,6 @@
 FROM node:10
 WORKDIR /app/
-COPY package*.json /app/
+COPY ./microservices/login-signup/package*.json /app/
 RUN npm install
 COPY . /app/
 ENV MYSQL_ENDPOINT=ccgroup7-profiledb.cdpqrynmovyz.us-east-1.rds.amazonaws.com
