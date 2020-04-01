@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
   onSearch(value: string) {
     this.keyword = value;
     this.apiSvc.getAttractions(this.keyword).subscribe(res => {
-      // this.attractions = [];
+      this.attractions = [];
       if (res.length > 0) {
         this.error = '';
         for (const location of res) {
