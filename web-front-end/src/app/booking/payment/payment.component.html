@@ -23,7 +23,7 @@
             <div class="form-group">
                 <form class="example-form">
                     <mat-form-field class="example-full-width">
-                        <mat-label>CVV </mat-label>
+                        <mat-label>CVV (3 digits) </mat-label>
                         <input name="cvv" [formControl]="cvv" ngModel matInput>
                     </mat-form-field>
                 </form>
@@ -31,8 +31,7 @@
         </div>
         <div class="panel-footer">
             <div class="example-button-row">
-                <button mat-raised-button color="primary" #testButton (click)="proceedToPayment()">Proceed to
-                    Payment</button>
+                <button style="font-size:larger;background-color: green;" mat-raised-button color="primary" #testButton (click)="proceedToPayment()">Pay</button>
             </div>
         </div>
     </div>
