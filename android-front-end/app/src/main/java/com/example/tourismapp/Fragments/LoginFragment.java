@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -177,6 +178,7 @@ public class LoginFragment extends Fragment {
                 userId = (int)(Double.parseDouble(map.get("id").toString()));
                 Log.e("msg","value is: "+userId);
                 ((GlobalStorage) getActivity().getApplication()).setUserId(userId);
+                changeVisibilities();
                 if(flag != null){
                     Bundle bundle1 = new Bundle();
                     bundle1.putString("name",locationName);
