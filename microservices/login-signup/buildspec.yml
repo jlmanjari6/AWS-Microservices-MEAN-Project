@@ -13,6 +13,7 @@ phases:
             - echo Building docker image....
             - ls
             - docker build -t $REPOSITORY_URI:latest -f ./microservices/login-signup/Dockerfile .
+            - docker images
             - docker tag $REPOSITORY_URI:profile profile
             - docker images
     post_build:
