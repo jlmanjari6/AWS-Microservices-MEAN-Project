@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tourismapp.Helpers.GlobalStorage;
 import com.example.tourismapp.Interface.RetrofitApiInterface;
 import com.example.tourismapp.Models.BookingData;
 
@@ -29,14 +30,29 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class payment extends AppCompatActivity {
     String origin, destination, year, month, day, noOfPassengers, CVV, cardName, cardNumber;
-    int userID;
+    String startTime, endTime;
+    int userID, fare, busId, busNo;
     EditText cvvET, cardNameET, cardNumberET;
     public BookingData bData = null;
+
+    int userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_layout);
+
+        String userEmail = ((GlobalStorage) this.getApplication()).getUserEmail();
+        if(userEmail == null) {
+            // user not logged in
+        }
+        else {
+            // user logged in
+            // fetch user id
+            userId = ((GlobalStorage) this.getApplication()).getUserId();
+            //int userId = ((GlobalStorage) this.getApplication()).getUserId();
+        }
 
         Bundle bundle = getIntent().getExtras();
         origin = bundle.getString("fromLocation");
@@ -46,9 +62,15 @@ public class payment extends AppCompatActivity {
         day = bundle.getString("Day");
         noOfPassengers = bundle.getString("noOfPassengers");
         String temp = bundle.getString("userID");
+        startTime = bundle.getString("startTime");
+        endTime = bundle.getString("endTime");
+        fare = Integer.parseInt(bundle.getString("fare"));
+        busId = Integer.parseInt(bundle.getString("busId"));
+        busNo = Integer.parseInt(bundle.getString("busNo"));
         userID = Integer.parseInt(temp);
-        userID = 1;
-
+        //userID = 11;
+        System.out.println(userID+"------------");
+        System.out.println(busId);
         cvvET = (EditText) findViewById(R.id.etCVV);
         cardNameET = (EditText) findViewById(R.id.cardName_et);
         cardNumberET = (EditText) findViewById(R.id.cardNumber_et);
@@ -92,6 +114,7 @@ public class payment extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Login first to Book Ticket", Toast.LENGTH_LONG).show();
                         return;
                     }
+
                     String tempD = month+"/"+day+"/"+year;
                     Date travelDate = null;
                     try {
@@ -100,19 +123,31 @@ public class payment extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     Calendar cal = Calendar.getInstance();
-                    SimpleDateFormat simpleformat = new SimpleDateFormat("MM/dd/yyyy");
-                    String bookingDate = simpleformat.format(cal.getTime());
+                    Date date = cal.getTime();
+                    SimpleDateFormat simpleformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String bookingDate = simpleformat.format(date);
 
+                    String travelDate_Temp = simpleformat.format(date);
 
                     int noOfSeats = Integer.parseInt(noOfPassengers);
-                    int busID = 17;
 
-                    bData = new BookingData(userID,origin, destination, travelDate.toString(), bookingDate, noOfSeats, busID);
+                    bData = new BookingData(userID,origin, destination, travelDate_Temp, bookingDate, noOfSeats, busId);
+
                     saveTicketToDB();
 
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("fromLocation",origin);
+                    bundle1.putString("toLocation",destination);
+                    bundle1.putString("travelDate",tempD);
+                    bundle1.putString("noOfPassengers",String.valueOf(noOfSeats));
+                    bundle1.putString("userID",String.valueOf(userID));
+                    bundle1.putString("startTime", startTime);
+                    bundle1.putString("endTime", endTime);
+                    bundle1.putString("fare",String.valueOf(fare));
+                    bundle1.putString("busNo", String.valueOf(busNo));
                     //Toast.makeText(getApplicationContext(),"Ticket is booked", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                    intent.putExtra("flag","1");
+                    Intent intent = new Intent(getApplicationContext(),generatedTicketLayout.class);
+                    intent.putExtras(bundle1);
                     startActivity(intent);
                 }
             });
@@ -122,7 +157,7 @@ public class payment extends AppCompatActivity {
     }
     public void saveTicketToDB(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.2.15:61188/") // replace your local ip address here (but not localhost/127.0.0.1)
+                .baseUrl("https://fv2z97pt9c.execute-api.us-east-1.amazonaws.com/dev/booking/") // replace your local ip address here (but not localhost/127.0.0.1)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

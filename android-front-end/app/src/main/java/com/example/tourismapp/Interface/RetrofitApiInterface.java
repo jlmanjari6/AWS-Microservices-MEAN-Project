@@ -1,6 +1,8 @@
 package com.example.tourismapp.Interface;
 
 import com.example.tourismapp.Models.BookingData;
+import com.example.tourismapp.Models.BusData;
+import com.example.tourismapp.Models.LocationModel;
 import com.example.tourismapp.Models.NoOfBooking;
 import com.example.tourismapp.Models.TicketDetails;
 import com.example.tourismapp.Models.Topplaces;
@@ -30,7 +32,12 @@ public interface RetrofitApiInterface {
     @GET("noOfBookings")
     Call<List<NoOfBooking>> bookingDetails();
 
-    @GET("tickets/user/{userId}")
+    @GET("booking/tickets/user/{userId}")
     Call<List<TicketDetails>> ticketHistory(@Path("userId") int id);
 
+    @GET("booking/locations")
+    Call<List<LocationModel>> locationName();
+
+    @GET("booking/buses/{locationId}")
+    Call<List<BusData>> busData(@Path("locationId") int id);
 }

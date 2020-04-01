@@ -2,6 +2,8 @@ package com.example.tourismapp.Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -30,6 +32,7 @@ import com.example.tourismapp.Helpers.CognitoHelper;
 import com.example.tourismapp.Helpers.GlobalStorage;
 import com.example.tourismapp.Interface.RetrofitApiInterface;
 import com.example.tourismapp.R;
+import com.example.tourismapp.bookingPage;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.internal.LinkedTreeMap;
 
@@ -41,12 +44,19 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class LoginFragment extends Fragment {
 
     EditText etEmail, etPassword;
     Button btnLogin;
     NavigationView navigationView;
     String mfaCode = "";
+    String flag;
+    String locationId;
+    String locationName;
+
+    int userId;
 
     @Nullable
     @Override
@@ -56,6 +66,14 @@ public class LoginFragment extends Fragment {
         etEmail = view.findViewById(R.id.etEmail);
         etPassword = view.findViewById(R.id.etPassword);
         btnLogin = view.findViewById(R.id.btnLogin);
+
+        try {
+            flag = getArguments().getString("flag");
+            locationId = getArguments().getString("locationId");
+            locationName = getArguments().getString("locationName");
+        }catch (Exception e){
+            flag = null;
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +99,7 @@ public class LoginFragment extends Fragment {
         @Override
         public void onSuccess(CognitoUserSession userSession, CognitoDevice newDevice) {
             Log.i("Success", userSession.getUsername());
-            handleLoginSuccess();
+            handleLoginSuccess(flag, locationId, locationName);
         }
 
         @Override
@@ -134,13 +152,13 @@ public class LoginFragment extends Fragment {
         builder.show();
     }
 
-    public void handleLoginSuccess() {
+    public void handleLoginSuccess(String flag, String locationId, String locationName) {
         // set auth status with email to global storage
         String email = etEmail.getText().toString();
         ((GlobalStorage) getActivity().getApplication()).setUserEmail(email);
         // fetch user Id from db
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http:192.168.56.1:3000/") // replace your local ip address here (but not localhost/127.0.0.1)
+                .baseUrl("https://fv2z97pt9c.execute-api.us-east-1.amazonaws.com/dev/profile/") // replace your local ip address here (but not localhost/127.0.0.1)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -156,9 +174,17 @@ public class LoginFragment extends Fragment {
                 List<Object> temp = (List<Object>) response.body();
                 LinkedTreeMap map = (LinkedTreeMap) temp.get(0);
                 // set user id to global storage
-                int userId = (int)(Double.parseDouble(map.get("id").toString()));
+                userId = (int)(Double.parseDouble(map.get("id").toString()));
                 Log.e("msg","value is: "+userId);
                 ((GlobalStorage) getActivity().getApplication()).setUserId(userId);
+                if(flag != null){
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("name",locationName);
+                    bundle1.putString("locationId",locationId);
+                    Intent intent = new Intent(getContext(), bookingPage.class);
+                    intent.putExtras(bundle1);
+                    startActivity(intent);
+                }
             }
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
@@ -169,11 +195,13 @@ public class LoginFragment extends Fragment {
         // change visibilities of Login, Signup, Logout, and TicketHistory fragments
         changeVisibilities();
         // navigate to search fragment
-        SearchFragment fragment = new SearchFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(((ViewGroup) (getView().getParent())).getId(), fragment);
-        ft.addToBackStack(null);
-        ft.commit();
+        if(flag == null) {
+            SearchFragment fragment = new SearchFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(((ViewGroup) (getView().getParent())).getId(), fragment);
+            ft.addToBackStack(null);
+            ft.commit();
+        }
     }
 
     private void changeVisibilities() {
