@@ -12,10 +12,11 @@ export class SearchComponent implements OnInit {
 
   keyword: string;
   attractions = [];
+  locationIds = [];
+  bookingId: number;
   error: string;
 
-  constructor(private authService: AuthService, private router: Router,
-    private apiSvc: APIService) { }
+  constructor(private authService: AuthService, private router: Router, private apiSvc: APIService) { }
 
   ngOnInit(): void {
   }
@@ -23,34 +24,41 @@ export class SearchComponent implements OnInit {
   onSearch(value: string) {
     this.keyword = value;
     this.apiSvc.getAttractions(this.keyword).subscribe(res => {
-      this.attractions = [];
-      for (let i = 0; i < res.length; i++) {
-        this.attractions.push(res[i]);
-      }
-
-      if (this.attractions.length == 0) {
-        this.error = "No matching results found. Please try again!";
+      // this.attractions = [];
+      if (res.length > 0) {
+        this.error = '';
+        for (const location of res) {
+          this.attractions.push(location);
+          if (!this.locationIds.includes(location.id)) {
+            this.locationIds.push(location.id);
+          }
+        }
+        // increment number of hits for each location
+        for (const locationId of this.locationIds) {
+          this.apiSvc.incrementNoOfHits({ locationId })
+            .subscribe(() => { });
+        }
+        // console.log(this.locationIds);
+        // let locationId = { locationId: this.attractions[0]["id"] };
+        // this.apiSvc.incrementNoOfHits(locationId)
+        //   .subscribe(() => { });
+      } else {
+        this.error = 'No matching results found. Please try again!';
         return;
-      }
-      else {
-        this.error = "";
-        // increment number of hits 
-        let locationId = { locationId: this.attractions[0]["id"] };
-        this.apiSvc.incrementNoOfHits(locationId)
-          .subscribe(res => { });
       }
     });
   }
 
-  onClickBook(): void {
+  onClickBook(value: number) {
+    this.bookingId = value;
+    // console.log({ bookingId: this.bookingId });
     // check if a login session exists - yes: navigate to booking page, no: navigate to login page
     if (this.authService.getAuthStatus()) {
-      const navigationExtras: NavigationExtras = { state: { fromComponent: 'search', locationId: this.attractions[0]["id"] } };
-      this.router.navigate(["/Booking"], navigationExtras);
-    }
-    else {
-      const navigationExtras: NavigationExtras = { state: { fromComponent: 'search', locationId: this.attractions[0]["id"] } };
-      this.router.navigate(["/Login"], navigationExtras);
+      const navigationExtras: NavigationExtras = { state: { fromComponent: 'search', locationId: this.bookingId } };
+      this.router.navigate(['/Booking'], navigationExtras);
+    } else {
+      const navigationExtras: NavigationExtras = { state: { fromComponent: 'search', locationId: this.bookingId } };
+      this.router.navigate(['/Login'], navigationExtras);
     }
   }
 

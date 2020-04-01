@@ -17,7 +17,7 @@ input {
 }
 
 .example-card {
-    margin-bottom: 7%;            
+    margin-bottom: 4%;            
 }
 
 h2 {
@@ -29,34 +29,48 @@ p {
 }
 
 button {
-    width: 300px;    
+    /* width: 300px;     */
     align-items: center;
-    margin-left: 500px;
-    height: 50px;
-    font-size: 20pt;
-    margin-bottom: 5%;
+    /* margin-left: 500px; */
+    /* height: 50px; */
+    /* font-size: 16pt; */
+    float: right;
+    /* margin-bottom: 5%; */
+}
+
+mat-card-content {
+    display: flex;    
+}
+
+div.description {
+    padding-left: 16px;
+    text-align: justify;       
+}
+
+div.image {
+    display: flex;
 }
 
 img {
-    width: 450px;
-    height: 400px;
-    margin-left:200px;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    /* width: 400px; */
+    height: auto;
+    /* margin-left:200px; */
+    /* margin-top: 2%; */
+    /* margin-bottom: 2%; */
 }
 
 mat-card-title {
-    text-align: center;
-    font-size: 22pt;
+    /* text-align: center; */
+    font-size: 20pt;
     font-weight: bold;
     margin-top: 2%;
 }
 
 h4 {
-    text-align: center;
-    font-size: 18pt;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    /* text-align: center; */
+    font-size: 12pt;
+    /* margin-top: 0; */
+    /* margin-bottom: 0; */
     font-weight: bold;
 }
 

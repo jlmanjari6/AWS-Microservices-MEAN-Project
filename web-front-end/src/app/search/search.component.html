@@ -5,18 +5,24 @@
 
 <div *ngFor="let attraction of attractions" class="container">
     <mat-card class="example-card">
-        <mat-card-title>{{ attraction.attraction }}</mat-card-title>
-        <img mat-card-image src='{{ attraction.imageURL }}' alt="">
+        <mat-card-title>
+            <button mat-raised-button color="primary" (click)="onClickBook(attraction.id)">Book</button>
+            {{ attraction.attraction }}, {{ attraction.city }}
+        </mat-card-title>
         <mat-card-content>
-            <h4> Highlights </h4>
-            <br>
-            <p>
-                {{ attraction.description }}
-            </p>
+            <div class="image">
+                <img src='{{ attraction.imageURL }}' alt="">
+            </div>
+            <div class="description">
+                <h4> Highlights </h4>
+                <p>
+                    {{ attraction.description }}
+                </p>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>
-<button *ngIf="attractions.length>0" style="margin-left:40%" mat-raised-button color="primary" (click)="onClickBook()">Book ticket</button>
+
 
 <div class="error-container">
     <div *ngIf="error" style="width: 70%" class="alert alert-danger" role="alert">
