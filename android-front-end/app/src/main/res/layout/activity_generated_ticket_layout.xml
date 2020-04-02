@@ -211,6 +211,6 @@
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Download PDF"/>
+            android:text="Download Ticket"/>
     </LinearLayout>
 </RelativeLayout>
