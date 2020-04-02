@@ -12,6 +12,15 @@ export class ForgotPasswordVerificationComponent implements OnInit {
 
   error: string;
 
+  emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  otpPattern = /^[0-9]{6}$/;
+  passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\^$*.\[\]{}\(\)?\-“!@#%&/,><\’:;|_~`])\S{6,99}$/;
+  pwdLengthExp = new RegExp('^.{6,99}$');
+  lowercaseExp = new RegExp('(?=.*[a-z])');
+  uppercaseExp = new RegExp('(?=.*[A-Z])');
+  numericExp = new RegExp('(?=.*[0-9])');
+  specialCharacterExp = new RegExp('(?=.*[\^$*.\[\]{}\(\)?\-“!@#%&/,><\’:;|_~`])');
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
@@ -19,7 +28,7 @@ export class ForgotPasswordVerificationComponent implements OnInit {
 
   handleForgotPassword(emailForm: NgForm) {
     Auth.forgotPasswordSubmit(emailForm.value.email, emailForm.value.code, emailForm.value.password)
-      .then(data => {        
+      .then(data => {
         this.router.navigate(['/Login']);
       })
       .catch(err => {
