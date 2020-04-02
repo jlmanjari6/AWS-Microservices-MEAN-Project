@@ -19,34 +19,47 @@ export class PaymentComponent implements OnInit {
   cvv = new FormControl();
   ticket: Ticket;
 
-  constructor(private router: Router, private authService: AuthService, private dataService: DataService, private registrationSvc: APIService) { }
+  cardNoRegex = new RegExp('^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$');
+  nameRegex = new RegExp('^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$');
+  cvvRegex = new RegExp('^[0-9]{3}$');
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private dataService: DataService,
+    private registrationSvc: APIService) { }
 
   ngOnInit(): void {
     if (!this.authService.getAuthStatus()) {
       this.router.navigate(['/Login']);
     }
-    if (this.dataService.currentData != undefined) {
+    if (this.dataService.currentData !== undefined) {
       this.dataService.currentData.subscribe(data => this.ticket = data);
     }
   }
 
   proceedToPayment(): void {
-
-    if (this.cardHolderName.value == "" || this.cardNo.value == "" || this.cvv.value == "") {
-      this.error = "All fields are required!"
+    this.error = '';
+    if (this.cardHolderName.value === '' || this.cardNo.value === '' || this.cvv.value === '') {
+      this.error = 'All fields are required!\n';
     }
-    else if (this.cardNo.value != "" && this.cardNo.value != "1111-1111-1111-1111") {
-      this.error = "Either Card number is invalid or it is not in format XXXX-XXXX-XXXX-XXXX"
+    if (this.cardNo.value !== '' && !this.cardNoRegex.test(this.cardNo.value)) {
+      this.error += 'Invalid Card Number\n';
     }
-    else {
-      this.error = ""
+    if (this.cardHolderName.value !== '' && !this.nameRegex.test(this.cardHolderName.value)) {
+      this.error += 'Invalid Name\n';
+    }
+    if (this.cvv.value !== '' && !this.cvvRegex.test(this.cvv.value)) {
+      this.error += 'Invalid CVV';
+    }
+    if (this.error === '') {
       this.ticket.userId = this.authService.getUserID();
       this.saveTicketstoDB();
-      this.router.navigate(["/GenerateTicket"]);
+      this.router.navigate(['/GenerateTicket']);
     }
   }
 
-  saveTicketstoDB(): void {        
+  saveTicketstoDB(): void {
     this.registrationSvc.saveTicketstoDB(this.ticket)
       .subscribe(res => {
         this.ticket.ticketId = res.insertId;

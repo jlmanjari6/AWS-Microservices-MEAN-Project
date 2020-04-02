@@ -8,7 +8,8 @@
                 <form class="example-form">
                     <mat-form-field class="example-full-width">
                         <mat-label>Card No.</mat-label>
-                        <input name="cardNo" [formControl]="cardNo" ngModel matInput placeholder="Example: 1111-1111-1111-1111">
+                        <input name="cardNo" [formControl]="cardNo" [pattern]="cardNoRegex" ngModel matInput
+                            placeholder="Enter card number">
                     </mat-form-field>
                 </form>
             </div>
@@ -16,7 +17,8 @@
                 <form class="example-form">
                     <mat-form-field class="example-full-width">
                         <mat-label>Card Holder Name </mat-label>
-                        <input name="cardHolderName" [formControl]="cardHolderName" ngModel matInput>
+                        <input name="cardHolderName" [formControl]="cardHolderName" placeholder="Enter card holder name"
+                            ngModel matInput>
                     </mat-form-field>
                 </form>
             </div>
@@ -24,14 +26,16 @@
                 <form class="example-form">
                     <mat-form-field class="example-full-width">
                         <mat-label>CVV (3 digits) </mat-label>
-                        <input name="cvv" [formControl]="cvv" ngModel matInput>
+                        <input name="cvv" [formControl]="cvv" [pattern]="cvvRegex" placeholder="Enter CVV" ngModel
+                            matInput>
                     </mat-form-field>
                 </form>
             </div>
         </div>
         <div class="panel-footer">
             <div class="example-button-row">
-                <button style="font-size:larger;background-color: green;" mat-raised-button color="primary" #testButton (click)="proceedToPayment()">Pay</button>
+                <button style="font-size:larger;background-color: green;" mat-raised-button color="primary" #testButton
+                    (click)="proceedToPayment()">Pay</button>
             </div>
         </div>
     </div>
