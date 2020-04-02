@@ -15,7 +15,7 @@ app.listen(process.env.PORT, () =>
 
 // GET API for landing page
 app.get("/profile", (req, res) => {
-  res.send("Hello world - Profile again!");
+  res.send("Hello world - Profile service!");
 });
 
  // POST api to save user to db
