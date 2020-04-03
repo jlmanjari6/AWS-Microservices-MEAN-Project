@@ -15,7 +15,7 @@ app.listen(process.env.PORT, () =>
 
 // GET api to get landing page
 app.get("/booking", (req, res) => {
-  res.send("Hello World - Booking!");
+  res.send("Hello World - Booking service!");
 });
 
 // POST api to save ticket details
