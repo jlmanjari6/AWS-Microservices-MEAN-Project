@@ -21,6 +21,8 @@ phases:
             - docker push 864114915596.dkr.ecr.us-east-1.amazonaws.com/profiledb:profile
             - printf '[{"name":"profile","imageUri":"%s"}]' $REPOSITORY_URI:profile > imagedefinitions.json
             - cat imagedefinitions.json
+            - aws ecs list-tasks --cluster "profile" --output text | awk '{print $2}' | while read line ; do aws ecs stop-task --task "$line" --cluster "profile" ; done
+
 artifacts:
     files: imagedefinitions.json
     
